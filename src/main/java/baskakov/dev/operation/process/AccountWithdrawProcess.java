@@ -10,7 +10,7 @@ import java.util.Scanner;
 @Component
 public class AccountWithdrawProcess implements ProcessorOperation {
     private final Scanner scanner;
-    private final AccountService  accountService;
+    private final AccountService accountService;
 
     public AccountWithdrawProcess(Scanner scanner,
                                   AccountService accountService) {
@@ -21,16 +21,12 @@ public class AccountWithdrawProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор счета для снятия средств:");
-        try {
-            int accountId = Integer.parseInt(scanner.nextLine());
-            System.out.println("Введите сумму для снятия:");
-            int amount = Integer.parseInt(scanner.nextLine());
-            accountService.withdrawFromAccount(accountId, amount);
-            System.out.println("Со счета %s успешно снято %s"
-                    .formatted(accountId, amount));
-        }catch (IllegalArgumentException e){
-            e.getMessage();
-        }
+        int accountId = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите сумму для снятия:");
+        int amount = Integer.parseInt(scanner.nextLine());
+        accountService.withdrawFromAccount(accountId, amount);
+        System.out.println("Со счета %s успешно снято %s"
+                .formatted(accountId, amount));
     }
 
     @Override

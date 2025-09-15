@@ -19,8 +19,13 @@ public class ShowAllUsersProcess implements ProcessorOperation {
     @Override
     public void process() {
         List<User> users = userService.getAllUsers();
+        if (users.isEmpty()) {
+            System.out.println("Список пользователей пуст!\n");
+            return;
+        }
         System.out.println("Список всех пользователей:");
         users.forEach(System.out::println);
+        System.out.println();
     }
 
     @Override
