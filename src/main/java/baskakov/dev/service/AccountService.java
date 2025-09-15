@@ -14,7 +14,7 @@ public class AccountService {
     private final AccountProperties accountProperties;
     private int idCounter;
 
-    public AccountService(Map<Integer, Account> accountMap, AccountProperties accountProperties, int idCounter) {
+    public AccountService(AccountProperties accountProperties) {
         this.accountMap = new HashMap<>();
         this.accountProperties = accountProperties;
         this.idCounter = 0;
@@ -90,8 +90,8 @@ public class AccountService {
         Account accountFrom = getAccountById(fromAccountId)
                 .orElseThrow(() -> new IllegalArgumentException("Счет с id $s не найден!".formatted(fromAccountId)));
 
-        Account accountTo = getAccountById(fromAccountId)
-                .orElseThrow(() -> new IllegalArgumentException("Счет с id $s не найден!".formatted(fromAccountId)));
+        Account accountTo = getAccountById(toAccountId)
+                .orElseThrow(() -> new IllegalArgumentException("Счет с id $s не найден!".formatted(toAccountId)));
 
         if (amountToTransfer <= 0) {
             throw new IllegalArgumentException("Невозможно перевести 0 или отрицательную сумму: amountToTransfer = %s"
@@ -104,10 +104,10 @@ public class AccountService {
         }
 
         int totalAmount = accountTo.getUserId() != accountFrom.getUserId() ?
-                (int) (amountToTransfer * (1 - accountProperties.getDefaultTransferCommision())) :
+                (int) (amountToTransfer * (1 - accountProperties.getDefaultTransferComission())) :
                 amountToTransfer;
 
         accountFrom.setMoneyAmount(accountFrom.getMoneyAmount() - amountToTransfer);
-        accountTo.setMoneyAmount(accountTo.getMoneyAmount() + amountToTransfer);
+        accountTo.setMoneyAmount(accountTo.getMoneyAmount() + totalAmount);
     }
 }
