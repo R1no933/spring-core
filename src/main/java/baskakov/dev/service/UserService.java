@@ -5,7 +5,6 @@ import baskakov.dev.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -14,7 +13,7 @@ public class UserService {
     private final AccountService accountService;
     private int idCounter;
 
-    public UserService(Map<Integer, User> userMap, Set<String> takenLogins, AccountService accountService, int idCounter) {
+    public UserService(AccountService accountService) {
         this.userMap = new HashMap<>();
         this.takenLogins = new HashSet<>();
         this.accountService = accountService;

@@ -2,25 +2,24 @@ package baskakov.dev;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 @Component
 public class AccountProperties {
     private final int defaultAmount;
-    private final double defaultTransferCommision;
+    private final double defaultTransferComission;
 
     public AccountProperties(
             @Value("${account.default-amount}") int defaultAmount,
-            @Value("${account.transfer-commission}") double defaultTransferCommision) {
+            @Value("${account.transfer-commission}") double defaultTransferCommission) {
         this.defaultAmount = defaultAmount;
-        this.defaultTransferCommision = defaultTransferCommision;
+        this.defaultTransferComission = defaultTransferCommission;
     }
 
     public int getDefaultAmount() {
         return defaultAmount;
     }
 
-    public double getDefaultTransferCommision() {
-        return defaultTransferCommision;
+    public double getDefaultTransferComission() {
+        return defaultTransferComission;
     }
 }
