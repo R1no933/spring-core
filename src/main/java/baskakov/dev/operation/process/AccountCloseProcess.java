@@ -27,17 +27,13 @@ public class AccountCloseProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор счета, который хотите закрыть:");
-        try {
-            int accountId = Integer.parseInt(scanner.nextLine());
-            Account accountToClose = accountService.closeAccountById(accountId);
-            User user = userService.getUserById(accountToClose.getUserId()).orElseThrow(() ->
-                    new IllegalArgumentException("Пользователь %s не найден"
-                            .formatted(accountToClose.getUserId())));
-            user.getAccountList().remove(accountToClose);
-            System.out.println("Счет успешно закрыт");
-        } catch (IllegalArgumentException e) {
-            e.getMessage();
-        }
+        int accountId = Integer.parseInt(scanner.nextLine());
+        Account accountToClose = accountService.closeAccountById(accountId);
+        User user = userService.getUserById(accountToClose.getUserId()).orElseThrow(() ->
+                new IllegalArgumentException("Пользователь %s не найден"
+                        .formatted(accountToClose.getUserId())));
+        user.getAccountList().remove(accountToClose);
+        System.out.println("Счет успешно закрыт");
     }
 
     @Override

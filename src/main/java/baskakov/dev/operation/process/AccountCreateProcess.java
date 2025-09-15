@@ -27,18 +27,14 @@ public class AccountCreateProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор пользователя, для которого хотите создать счет");
-        try {
-            int userId = Integer.parseInt(scanner.nextLine());
-            User user = userService.getUserById(userId)
-                    .orElseThrow(() -> new IllegalArgumentException("Пользователь с идентификатором %s не найден"
-                            .formatted(userId)));
-            Account account = accountService.createAccount(user);
-            user.getAccountList().add(account);
-            System.out.println("Новый счет успешно создан для пользователя %s"
-                    .formatted(user.getLogin()));
-        } catch (IllegalArgumentException e) {
-            e.getMessage();
-        }
+        int userId = Integer.parseInt(scanner.nextLine());
+        User user = userService.getUserById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Пользователь с идентификатором %s не найден"
+                        .formatted(userId)));
+        Account account = accountService.createAccount(user);
+        user.getAccountList().add(account);
+        System.out.println("Новый счет успешно создан для пользователя %s"
+                .formatted(user.getLogin()));
     }
 
     @Override

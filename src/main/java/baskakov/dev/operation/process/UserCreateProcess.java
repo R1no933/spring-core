@@ -23,7 +23,7 @@ public class UserCreateProcess implements ProcessorOperation {
         System.out.println("Введите имя пользователя для создания нового пользователя:");
         String username = scanner.next();
         User user = userService.createUser(username);
-        System.out.println("Пользователь %s успешно создан".formatted(user.toString()));
+        System.out.println("Пользователь %s успешно создан\n".formatted(user.toString()));
     }
 
     @Override

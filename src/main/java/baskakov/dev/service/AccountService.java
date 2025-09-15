@@ -1,6 +1,6 @@
 package baskakov.dev.service;
 
-import baskakov.dev.AccountProperties;
+import baskakov.dev.configure.AccountProperties;
 import baskakov.dev.model.Account;
 import baskakov.dev.model.User;
 import org.springframework.stereotype.Service;

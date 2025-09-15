@@ -21,16 +21,12 @@ public class AccountDepositProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор счета для пополнения:");
-        try {
-            int accountId = Integer.parseInt(scanner.nextLine());
-            System.out.println("Введите сумму для пополнения:");
-            int amount = Integer.parseInt(scanner.nextLine());
-            accountService.depositToAccount(accountId, amount);
-            System.out.println("Счет %s успешно пополнен на %s"
-                    .formatted(accountId, amount));
-        } catch (IllegalArgumentException e) {
-            e.getMessage();
-        }
+        int accountId = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите сумму для пополнения:");
+        int amount = Integer.parseInt(scanner.nextLine());
+        accountService.depositToAccount(accountId, amount);
+        System.out.println("Счет %s успешно пополнен на %s"
+                .formatted(accountId, amount));
     }
 
     @Override
