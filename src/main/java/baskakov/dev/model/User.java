@@ -1,7 +1,6 @@
 package baskakov.dev.model;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class User {
     @Column(name = "user_login")
     private String login;
 
-    @OneToMany(mappedBy = "user",  fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "owner",  fetch = FetchType.EAGER)
     private List<Account> accountList;
 
 

@@ -27,8 +27,8 @@ public class AccountCreateProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор пользователя, для которого хотите создать счет");
-        int userId = Integer.parseInt(scanner.nextLine());
-        User user = userService.getUserById(userId)
+        Long userId = Long.parseLong(scanner.nextLine());
+        User user = userService.findUserById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Пользователь с идентификатором %s не найден"
                         .formatted(userId)));
         Account account = accountService.createAccount(user);
