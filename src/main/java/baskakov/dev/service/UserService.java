@@ -5,13 +5,13 @@ import baskakov.dev.model.User;
 import baskakov.dev.utli.TransactionHelper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class UserService {
-
     private final AccountService accountService;
     private final SessionFactory sessionFactory;
     private final TransactionHelper transactionHelper;

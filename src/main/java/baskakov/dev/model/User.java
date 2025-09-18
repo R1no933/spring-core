@@ -47,9 +47,6 @@ public class User {
         this.login = login;
     }
 
-    public List<Account> getAccountList() {
-        return accountList;
-    }
 
     public void setAccountList(List<Account> accountList) {
         this.accountList = accountList;

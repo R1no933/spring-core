@@ -50,6 +50,7 @@ public class Account {
     }
 
     public void setMoneyAmount(Integer moneyAmount) {
+
         this.moneyAmount = moneyAmount;
     }
 
