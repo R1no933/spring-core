@@ -1,30 +1,55 @@
 package baskakov.dev.model;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
 
 import java.util.List;
 
+@Entity
+@Table(name = "users")
 public class User {
-    private final int id;
-    private final String login;
-    private final List<Account> accountList;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Long id;
 
-    public User(int id, String login, List<Account> accountList) {
+    @Column(name = "user_login")
+    private String login;
+
+    @OneToMany(mappedBy = "owner",  fetch = FetchType.EAGER)
+    private List<Account> accountList;
+
+
+    public User() {
+    }
+
+    public User(
+            Long id,
+            String login,
+            List<Account> accountList) {
         this.id = id;
         this.login = login;
         this.accountList = accountList;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public List<Account> getAccountList() {
-        return accountList;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
     }
 
     @Override

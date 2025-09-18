@@ -27,7 +27,8 @@ public class AccountCloseProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор счета, который хотите закрыть:");
-        int accountId = Integer.parseInt(scanner.nextLine());
+        Long accountId = Long.parseLong(scanner.nextLine());
+        accountService.closeAccountById(accountId);
         Account accountToClose = accountService.closeAccountById(accountId);
         User user = userService.getUserById(accountToClose.getUserId()).orElseThrow(() ->
                 new IllegalArgumentException("Пользователь %s не найден"

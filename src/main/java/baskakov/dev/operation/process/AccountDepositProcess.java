@@ -21,7 +21,7 @@ public class AccountDepositProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор счета для пополнения:");
-        int accountId = Integer.parseInt(scanner.nextLine());
+        Long accountId = Long.parseLong(scanner.nextLine());
         System.out.println("Введите сумму для пополнения:");
         int amount = Integer.parseInt(scanner.nextLine());
         accountService.depositToAccount(accountId, amount);

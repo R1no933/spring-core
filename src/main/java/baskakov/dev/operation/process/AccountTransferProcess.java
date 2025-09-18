@@ -21,9 +21,9 @@ public class AccountTransferProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор счета откуда хотите перевести средства:");
-        int fromAccId = Integer.parseInt(scanner.nextLine());
+        Long fromAccId = Long.parseLong(scanner.nextLine());
         System.out.println("Введите идентификатор счета куда хотите перевести средства:");
-        int toAccId = Integer.parseInt(scanner.nextLine());
+        Long toAccId = Long.parseLong(scanner.nextLine());
         System.out.println("Введите сумму перевода:");
         int amount = Integer.parseInt(scanner.nextLine());
         accountService.transferMoney(fromAccId, toAccId, amount);
