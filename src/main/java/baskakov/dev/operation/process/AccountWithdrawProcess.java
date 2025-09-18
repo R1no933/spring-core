@@ -21,7 +21,7 @@ public class AccountWithdrawProcess implements ProcessorOperation {
     @Override
     public void process() {
         System.out.println("Введите идентификатор счета для снятия средств:");
-        int accountId = Integer.parseInt(scanner.nextLine());
+        Long accountId = Long.parseLong(scanner.nextLine());
         System.out.println("Введите сумму для снятия:");
         int amount = Integer.parseInt(scanner.nextLine());
         accountService.withdrawFromAccount(accountId, amount);

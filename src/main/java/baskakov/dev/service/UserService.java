@@ -2,43 +2,62 @@ package baskakov.dev.service;
 
 import baskakov.dev.model.Account;
 import baskakov.dev.model.User;
+import baskakov.dev.utli.TransactionHelper;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class UserService {
-    private final Map<Integer, User> userMap;
-    private final Set<String> takenLogins;
+
     private final AccountService accountService;
-    private int idCounter;
+    private final SessionFactory sessionFactory;
+    private final TransactionHelper transactionHelper;
 
-    public UserService(AccountService accountService) {
-        this.userMap = new HashMap<>();
-        this.takenLogins = new HashSet<>();
+    public UserService(
+            AccountService accountService,
+            SessionFactory sessionFactory,
+            TransactionHelper transactionHelper) {
         this.accountService = accountService;
-        this.idCounter = 0;
+        this.sessionFactory = sessionFactory;
+        this.transactionHelper = transactionHelper;
     }
 
-    public User createUser(String userLogin) {
-        if (takenLogins.contains(userLogin)) {
-            throw new IllegalArgumentException("Пользователь с логином $s уже существует!".formatted(userLogin));
+    public User createUser(String login) {
+        return transactionHelper.executeInTransaction(() -> {
+            var session = sessionFactory.getCurrentSession();
+            var user = session.createQuery("FROM User WHERE login = :login", User.class)
+                    .setParameter("login", login)
+                    .getSingleResultOrNull();
+
+            if (user != null) {
+                throw new IllegalArgumentException("Пользователь %s уже существует"
+                        .formatted(login));
+            }
+
+            User newUser =  new User(null, login, new ArrayList<>());
+            session.persist(newUser);
+
+            accountService.createAccount(newUser);
+
+            return newUser;
+        });
+
+    }
+
+    public Optional<User> findUserById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            var user = session.find(User.class, id);
+            return Optional.of(user);
         }
-        takenLogins.add(userLogin);
-        idCounter++;
-
-        User newUser = new User(idCounter, userLogin, new ArrayList<>());
-        Account newAccount = accountService.createAccount(newUser);
-        newUser.getAccountList().add(newAccount);
-        userMap.put(newUser.getId(), newUser);
-        return newUser;
-    }
-
-    public Optional<User> getUserById(int id) {
-        return Optional.ofNullable(userMap.get(id));
     }
 
     public List<User> getAllUsers() {
-        return userMap.values().stream().toList();
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("SELECT u FROM User u LEFT JOIN FETCH u.accountList", User.class)
+                    .list();
+        }
     }
 }

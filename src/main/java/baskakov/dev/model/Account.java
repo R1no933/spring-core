@@ -12,8 +12,8 @@ public class Account {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "owner")
+    private User owner;
 
     @Column(name = "money_amount")
     private Integer moneyAmount;
@@ -21,12 +21,11 @@ public class Account {
     public Account() {
     }
 
-    public Account(
-            Long id,
-            User user,
-            Integer moneyAmount) {
+    public Account(Long id,
+                   User owner,
+                   Integer moneyAmount) {
         this.id = id;
-        this.user = user;
+        this.owner = owner;
         this.moneyAmount = moneyAmount;
     }
 
@@ -38,12 +37,12 @@ public class Account {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public Integer getMoneyAmount() {
